@@ -1,0 +1,12 @@
+[2013-11-02 14:04:42] START
+[2013-11-02 15:10:58] EDIT SlugFitness/views/default/index.html: -30
+[2013-11-02 19:41:25] CREATE ndb_table.py: 0
+[2013-11-02 19:42:45] EDIT SlugFitness/models/ndb_table.py: 15
+[2013-11-02 19:56:52] EDIT SlugFitness/models/ndb_table.py: 0
+[2013-11-02 19:56:57] EDIT SlugFitness/models/ndb_table.py: 0
+[2013-11-02 20:01:04] EDIT SlugFitness/models/ndb_table.py: -14
+[2013-11-02 20:01:10] EDIT SlugFitness/models/ndb_table.py: 0
+[2013-11-02 20:01:57] EDIT SlugFitness/models/ndb_table.py: 0
+[2013-11-02 20:01:59] EDIT SlugFitness/models/ndb_table.py: 2
+[2013-11-02 20:02:07] EDIT SlugFitness/models/ndb_table.py: 1
+[2013-11-02 20:02:49] EDIT SlugFitness/models/ndb_table.py: -3
