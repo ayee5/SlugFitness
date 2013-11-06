@@ -8,7 +8,8 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 ## - call exposes all registered services (none by default)
 #########################################################################
-
+def home():
+    return dict()
 
 def index():
     """Creates a new message."""
@@ -21,6 +22,33 @@ def index():
         redirect(URL('default', 'index'))
     return dict(form=form)
 
+def profile():    
+    form = SQLFORM.factory(
+        Field('name', 'string'),
+        Field('address', 'string'),
+        Field('weight', 'integer'),
+        Field('height', 'integer'),        
+        )
+    if form.process().accepted:
+        create_profile(name=form.vars.name, address=form.vars.address, weight=form.vars.weight, height=form.vars.height)    
+        session.flash = T('Profile created')        
+        redirect(URL('default', 'login'))        
+    return dict(form = form)
+    
+def login():
+   s = get_user_email()
+   key = ndb.Key(Profile, s)
+   r = Profile.query(Profile.weight > 10)
+
+   return dict(s=s, r=r)    
+   
+def event():
+
+   return dict()       
+
+    
+def learn():
+    return dict()
 
 def user():
     """

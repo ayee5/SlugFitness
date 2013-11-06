@@ -1,0 +1,6 @@
+.mysilver {  
+	background: url("{{=URL(r=request,c='static',f='silvier.jpg')}}");      
+	font-family: Comic Sans MS, helvetica;
+    font-size: 18px; 
+    color: #333; }
+       
