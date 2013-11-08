@@ -35,12 +35,23 @@ def profile():
         redirect(URL('default', 'login'))        
     return dict(form = form)
     
-def login():
+def Profile_page():
    s = get_user_email()
    key = ndb.Key(Profile, s)
-   r = Profile.query(Profile.weight > 10)
 
-   return dict(s=s, r=r)    
+   r = Message.query()
+   myusers = r.fetch()
+
+	
+   return dict(myusers=myusers)
+   #return dict(s=s, r=r, myusers=myusers)    
+   
+
+def spreadsheet():
+	
+   return dict()
+  
+   
    
 def event():
 

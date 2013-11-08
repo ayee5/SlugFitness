@@ -23,8 +23,12 @@ response.google_analytics_id = None
 ## this is the main application menu add/remove items as required
 #########################################################################
 
+
 response.menu = [
-    (T('Home'), False, URL('default', 'index'), [])
+    ('Home Page', False, URL('default', 'home'), []),
+    ('Profile', False, URL('default', 'Profile_page'), []),
+    ('Data', False, URL('default', 'spreadsheet'), []),
+    ('Event', False, URL('default', 'event'),  [])
 ]
 
 DEVELOPMENT_MENU = True

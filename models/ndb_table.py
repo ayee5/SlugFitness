@@ -37,3 +37,10 @@ def create_profile(user=get_user_email(), name = '', address='', height = 0, wei
     key = new_profile.put()
     logger.info("Created a new profile with key: %r" % key)
     return key    
+	
+class Workoutdata(ndb.Model):
+    email = ndb.StringProperty()
+    row_col = ndb.StringProperty()
+
+
+
