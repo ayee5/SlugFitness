@@ -32,18 +32,19 @@ def profile():
     if form.process().accepted:
         create_profile(name=form.vars.name, address=form.vars.address, weight=form.vars.weight, height=form.vars.height)    
         session.flash = T('Profile created')        
-        redirect(URL('default', 'login'))        
+        redirect(URL('default', 'Profile_page'))        
     return dict(form = form)
     
 def Profile_page():
-   s = get_user_email()
-   key = ndb.Key(Profile, s)
-
-   r = Message.query()
-   myusers = r.fetch()
-
+	s = get_user_email()
+	key = ndb.Key(Profile, s)
 	
-   return dict(myusers=myusers)
+   
+	r = Profile.query()
+	myusers = r.fetch(20)
+	#myusers = r.fetch(20, projection=[Profile.name])
+	
+	return dict(myusers=myusers, r=r)
    #return dict(s=s, r=r, myusers=myusers)    
    
 

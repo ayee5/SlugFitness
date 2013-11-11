@@ -3,8 +3,10 @@
 <h1>Welcome your Profile page</h1>
 <br>
 <p><b>This is a test query for our NDB database</b> </p>
-{{=myusers}}
 
+{{for x in myusers:}}
+	{{=x.weight}}
+	{{pass}}
 <br><br>
-
+{{=r}}
 <p> Here add a profile <a href = "{{=URL('default','profile')}}" > this link. </a> </p>
