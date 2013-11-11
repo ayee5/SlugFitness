@@ -1,92 +1,37 @@
 {{response.files.append(URL('static','css/custom.css'))}}
 {{extend 'layout.html'}}
 <html>
+<h1>Workout Schedule</h1>
 <body>
-	<h1>Workout Schedule</h1>
-	<p>Enter your data here</p>	
-	<div>
-    		<input class = "myinput"></input>
-    		<input class = "myinput" value="Week 1"></input>
-    		<input class = "myinput" value="Week 2"></input>
-    		<input class = "myinput" value="Week 3"></input>
-    		<input class = "myinput" value="Week 4"></input>
-    		<input class = "myinput" value="Week 5"></input>
-    		<input class = "myinput" value="Week 6"></input>
-    		<input class = "myinput" value="Week 7"></input>
-		</div>
-		<div>
-    		<input class = "myinput" value="Monday"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-		</div>
-		<div>
-    		<input class = "myinput" value="Tuesday"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-		</div>
-		<div>
-    		<input class = "myinput" value="Wednesday"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-		</div>
-		<div>
-    		<input class = "myinput" value="Thursday"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-		</div>
-		<div>
-    		<input class = "myinput" value="Friday"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-		</div>
-		<div>
-    		<input class = "myinput" value="Saturday"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-		</div>
-		<div>
-    		<input class = "myinput" value="Sunday"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-    		<input class = "myinput"></input>
-		</div>
+	
+	<script>
+		function getid(el) {   
+			alert($(el).attr("id"));
+		}
+	</script>
+	
+	<div style="width:800px; margin:0 auto;">
+	<table>
+		<tr>
+			<td> <input id ="s2k" class = "myinput" value='' onclick="getid(this);"></input> </td>
+			{{weeks = ['Week 1','Week 2','Week 3','Week 4', 'Week 5', 'Week 6', 'Week 7']}}
+			{{for c in xrange(7):}}
+			<td> <input readonly class = "myinput" value='{{=weeks[c]}}'></input> </td>
+			{{pass}}
+		</tr>
 		
-		
+		{{days = ['Monday', 'Tuesday' , 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']}}
+		{{for r in xrange(7):}}
+		<tr>
+			<td> <input class = "myinput" value='{{=days[r]}}' readonly></input> </td>
+			{{for c in xrange(7):}}
+			<td> <input class="myinput" value='r{{=r}}c{{=c}}' id='r{{=r}}c{{=c}}' onclick="getid(this);"></input> </td>
+			{{pass}}
+		</tr>
+		{{pass}}
 
+	</table>
+	</div>	
 
 </body>
 <html>
