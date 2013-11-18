@@ -38,9 +38,25 @@ def create_profile(user=get_user_email(), name = '', address='', height = 0, wei
     logger.info("Created a new profile with key: %r" % key)
     return key    
 	
-class Workoutdata(ndb.Model):
+class WorkoutSession(ndb.Model):
     email = ndb.StringProperty()
-    row_col = ndb.StringProperty()
+    r_c = ndb.StringProperty()
+    row = ndb.IntegerProperty()
+    col = ndb.IntegerProperty()
+    minutes = ndb.IntegerProperty()
+	
+def create_WorkoutSession(user=get_user_email(), r_c = '',row=0, col=0, minutes=None):
+    """Creates a message, returning the key."""
+    new_WorkoutSession = WorkoutSession(parent=ndb.Key('User', user))
+    new_WorkoutSession.email = user
+    new_WorkoutSession.r_c = r_c	
+    new_WorkoutSession.row = row
+    new_WorkoutSession.col = col
+    new_WorkoutSession.minutes = minutes
+    key = new_WorkoutSession.put()
+    logger.info("Created a new workout session with key: %r" % key)
+    return key 
+	
 
 
 

@@ -3,17 +3,40 @@
 <html>
 <h1>Workout Schedule</h1>
 <body>
-	
-	<script>
-		function getid(el) {   
-			alert($(el).attr("id"));
-		}
+
+	<script type="text/javascript">
+		
+		function getid(u,el) {   
+			var myid = ($(el).attr('id')); //id of element
+			var val = document.getElementById(myid).value; //value of element		
+			var formData = "value=" + val + "&id=" +myid; //json string that will be posted
+		
+			$.ajax({type: "POST", 
+				url: u, 
+				data: formData, 
+				success: function(msg){ 
+				 	
+				}
+			});
+			var total = 0;
+			for(var r = 0; r < 7; r++){
+				for (var c = 0; c < 7; c++){
+					var r_c = r.toString() + c.toString();
+					var curr_val = $("#" + r_c).val();
+					total = total + parseInt(curr_val);
+				}	
+			}
+			alert(total);
+		}		
 	</script>
+
+	<form>
+	<!--<div class="sheet" style="width:800px; margin:0 auto;">-->
+	<div class="sheet">
 	
-	<div style="width:800px; margin:0 auto;">
 	<table>
 		<tr>
-			<td> <input id ="s2k" class = "myinput" value='' onclick="getid(this);"></input> </td>
+			<td> <input type= "hidden" id ="s2k" class = "myinput" value=''></input> </td>
 			{{weeks = ['Week 1','Week 2','Week 3','Week 4', 'Week 5', 'Week 6', 'Week 7']}}
 			{{for c in xrange(7):}}
 			<td> <input readonly class = "myinput" value='{{=weeks[c]}}'></input> </td>
@@ -25,13 +48,21 @@
 		<tr>
 			<td> <input class = "myinput" value='{{=days[r]}}' readonly></input> </td>
 			{{for c in xrange(7):}}
-			<td> <input class="myinput" value='r{{=r}}c{{=c}}' id='r{{=r}}c{{=c}}' onclick="getid(this);"></input> </td>
+				<td> <input class="myinput" value='{{=datalist[r][c]}}' id='{{=r}}{{=c}}' onchange="getid('{{=URL(r=request, f='update')}}',this);"></input> </td>
 			{{pass}}
 		</tr>
 		{{pass}}
+		
+		<tr>
+			<td> <input readonly class = "myinput" value="Weekly Sum" ></input> </td>
+			{{for e in xrange(7):}}
+				<td> <input class = "myinput" value='t{{=r}}'></input> </td>
+			{{pass}}	
+		</tr>
 
 	</table>
-	</div>	
-
+	</div>
+	</form>
+		
 </body>
 <html>

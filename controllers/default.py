@@ -8,6 +8,9 @@
 ## - download is for downloading files uploaded in the db (does streaming)
 ## - call exposes all registered services (none by default)
 #########################################################################
+
+
+
 def home():
     return dict()
 
@@ -22,6 +25,7 @@ def index():
         redirect(URL('default', 'index'))
     return dict(form=form)
 
+@auth.requires_login()
 def profile():    
     form = SQLFORM.factory(
         Field('name', 'string'),
@@ -32,33 +36,84 @@ def profile():
     if form.process().accepted:
         create_profile(name=form.vars.name, address=form.vars.address, weight=form.vars.weight, height=form.vars.height)    
         session.flash = T('Profile created')        
-        redirect(URL('default', 'Profile_page'))        
+       # redirect(URL('default', 'Profile_page'))        
     return dict(form = form)
-    
-def Profile_page():
-	s = get_user_email()
-	key = ndb.Key(Profile, s)
-	
-   
-	r = Profile.query()
-	myusers = r.fetch(20)
-	#myusers = r.fetch(20, projection=[Profile.name])
-	
-	return dict(myusers=myusers, r=r)
-   #return dict(s=s, r=r, myusers=myusers)    
-   
 
+@auth.requires_login() 	
+def Profile_page():
+    s = get_user_email()
+    key = ndb.Key(Profile, s)
+
+    r = Profile.query()
+    myusers = r.fetch(20)
+
+    test = WorkoutSession.query(WorkoutSession.email == "sd")
+    nouser = test.fetch(1)
+    myt = ""
+    testemail = ""
+    for j in nouser:
+	    testemail = j.email
+    if testemail == s:
+	    myt = "true"
+    else:
+	    myt = "false"
+    return dict(myusers=myusers, r=r, myt=myt)
+
+
+#update specified cell in spreadsheet    
+def update():
+    ##values received from post call
+    val = request.vars.values()[1]
+    id = request.vars.values()[0]
+
+    ##query ndb for key of specified cell
+    curruser = get_user_email()
+    quy = WorkoutSession.query()
+    quy = quy.filter(WorkoutSession.email==curruser)
+    quy = quy.filter(WorkoutSession.r_c == id)
+    singleEntry = quy.fetch(1)
+
+    ##Stud is now key. Update minutes
+    for u in singleEntry:
+	    u.key
+    stud = u
+    stud.minutes = int(val)
+    stud.put()
+    return str("s")
+
+#load spreadsheet
+@auth.requires_login()
 def spreadsheet():
-	
-   return dict()
-  
-   
-   
+    curruser = get_user_email()
+    test = WorkoutSession.query(WorkoutSession.email == curruser)
+    nouser = test.fetch(1)
+    testemail = ""
+    for j in nouser:
+        testemail = j.email
+
+    ##declare 2d list to hold workout data
+    datalist = []	
+    for a in xrange(7):
+        datalist.append([])
+
+    ##check if current user has a spreadsheet
+    if testemail == curruser:
+        r = WorkoutSession.query(WorkoutSession.email == curruser).order(WorkoutSession.r_c)
+        work = r.fetch(49)
+        for x in work:  #initialize datalist with the query (has spreadsheet)
+            datalist[x.row].append(x.minutes)
+        return dict(datalist=datalist)
+    else:
+        for rr in xrange(7):  # initialize datalist with all 0 (has no spreadsheet)
+            for cc in xrange(7):
+                create_WorkoutSession(r_c=`rr`+`cc`, row=rr, col=cc, minutes=0)
+                datalist[rr].append(0)
+        return dict(datalist=datalist)
+
 def event():
 
    return dict()       
 
-    
 def learn():
     return dict()
 
