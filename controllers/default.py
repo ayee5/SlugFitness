@@ -79,7 +79,7 @@ def update():
     stud = u
     stud.minutes = int(val)
     stud.put()
-    return str("s")
+    return str(id)
 
 #load spreadsheet
 @auth.requires_login()

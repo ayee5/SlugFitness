@@ -1,20 +1,54 @@
 .myinput {  
-   color:#00ff00;
+   color:#000000;
    width: 100px;
    height: 30px;
    text-align:center;
+
+}
+
+.col_row {  
+   color:#4B2E10;
+   width: 100px;
+   height: 30px;
+   text-align:center;
+   background-color: #BBE9FF;
+
+}
+
+.minute_remain {  
+   color:#4B2E10;
+   width: 120px;
+   height: 30px;
+   text-align:center;
+   background-color: #BBE9FF;
+
+}
+
+.weeklySum {  
+   color:#000000;
+   width: 100px;
+   height: 30px;
+   text-align:center;
+   background-color: #00CCCC;
+   font-weight:bold;
+
 }
 
 .sheet td {
     text-align: left;
     vertical-align: top;
-    padding: 5 5 5 5;
+    padding: 0 0 0 0;
     border: 0 0 0 0;
     spacing: 0 0 0 0;
 }
 .sheet input {
     border: 0;
-	background-color: #F8F8F8;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #666666;
+	font-family: helvetica, arial, sans serif;
+	padding-left: 0px;
+	
 	
 }
 td.colhead, td.rowhead {

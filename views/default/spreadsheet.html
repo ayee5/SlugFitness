@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 {{response.files.append(URL('static','css/custom.css'))}}
 {{extend 'layout.html'}}
 <html>
@@ -15,12 +16,12 @@
 				url: u, 
 				data: formData, 
 				success: function(msg){ 
-				 	
+				 	//alert(msg);
 				}
 			});
 			var total = 0;
-			for(var r = 0; r < 7; r++){
-				for (var c = 0; c < 7; c++){
+			for(var c = 0; c < 7; c++){
+				for (var r = 0; r < 7; r++){
 					var r_c = r.toString() + c.toString();
 					var curr_val = $("#" + r_c).val();
 					total = total + parseInt(curr_val);
@@ -39,14 +40,14 @@
 			<td> <input type= "hidden" id ="s2k" class = "myinput" value=''></input> </td>
 			{{weeks = ['Week 1','Week 2','Week 3','Week 4', 'Week 5', 'Week 6', 'Week 7']}}
 			{{for c in xrange(7):}}
-			<td> <input readonly class = "myinput" value='{{=weeks[c]}}'></input> </td>
+			<td> <input class = "col_row" value='{{=weeks[c]}}'></input> </td>
 			{{pass}}
 		</tr>
 		
 		{{days = ['Monday', 'Tuesday' , 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']}}
 		{{for r in xrange(7):}}
 		<tr>
-			<td> <input class = "myinput" value='{{=days[r]}}' readonly></input> </td>
+			<td> <input class = "col_row" value='{{=days[r]}}' ></input> </td>
 			{{for c in xrange(7):}}
 				<td> <input class="myinput" value='{{=datalist[r][c]}}' id='{{=r}}{{=c}}' onchange="getid('{{=URL(r=request, f='update')}}',this);"></input> </td>
 			{{pass}}
@@ -54,12 +55,32 @@
 		{{pass}}
 		
 		<tr>
-			<td> <input readonly class = "myinput" value="Weekly Sum" ></input> </td>
+			<td> <input class = "weeklySum" value="Weekly Total" ></input> </td>
 			{{for e in xrange(7):}}
-				<td> <input class = "myinput" value='t{{=r}}'></input> </td>
+				<td> <input id ='wt{{=r}}' class = "weeklySum" value=''></input> </td>
 			{{pass}}	
 		</tr>
 
+	</table>
+	</div>
+	</form>
+	
+	
+	<form>
+	<div class="sheet">
+	<table>
+		<tr>
+			<td> <input class = "minute_remain" value='Goal'></input> </td>
+			<td> <input class = "myinput" value=''></input> </td>
+		</tr>
+		<tr>
+			<td> <input class = "minute_remain" value='Total Minutes'></input> </td>
+			<td> <input class = "myinput" value=''></input> </td>
+		</tr>
+		<tr>
+			<td> <input class = "minute_remain" value="Minute until Goal"></input> </td>
+			<td> <input class = "myinput" value=''></input> </td>
+		</tr>
 	</table>
 	</div>
 	</form>
