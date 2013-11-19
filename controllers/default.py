@@ -59,9 +59,28 @@ def Profile_page():
 	    myt = "false"
     return dict(myusers=myusers, r=r, myt=myt)
 
+#update goal on spreadsheet    
+def updateGoal():
+    ##values received from post call
+    val = request.vars.values()[0]
+
+    ##query ndb for goal of current user
+    curruser = get_user_email()
+    quy = Goal.query()
+    quy = quy.filter(Goal.email==curruser)
+    singleEntry = quy.fetch(1)
+
+    ##Stud is now key. Update goal
+    for u in singleEntry:
+        u.key
+    stud = u
+    stud.min = int(val)
+    stud.put()
+    return str(id)
+
 
 #update specified cell in spreadsheet    
-def update():
+def updateInput():
     ##values received from post call
     val = request.vars.values()[1]
     id = request.vars.values()[0]
@@ -79,7 +98,7 @@ def update():
     stud = u
     stud.minutes = int(val)
     stud.put()
-    return str(id)
+    return str(val)
 
 #load spreadsheet
 @auth.requires_login()
@@ -96,19 +115,26 @@ def spreadsheet():
     for a in xrange(7):
         datalist.append([])
 
+    mygoal = 400
     ##check if current user has a spreadsheet
     if testemail == curruser:
         r = WorkoutSession.query(WorkoutSession.email == curruser).order(WorkoutSession.r_c)
         work = r.fetch(49)
         for x in work:  #initialize datalist with the query (has spreadsheet)
             datalist[x.row].append(x.minutes)
-        return dict(datalist=datalist)
+        
+        go = Goal.query(Goal.email == curruser)
+        curr_goal = go.fetch(1)
+        for x in curr_goal:  #initialize datalist with the query (has spreadsheet)
+            mygoal = x.min 
+        return dict(datalist=datalist, mygoal=mygoal)
     else:
+        create_goal(min = 400)
         for rr in xrange(7):  # initialize datalist with all 0 (has no spreadsheet)
             for cc in xrange(7):
                 create_WorkoutSession(r_c=`rr`+`cc`, row=rr, col=cc, minutes=0)
                 datalist[rr].append(0)
-        return dict(datalist=datalist)
+        return dict(datalist=datalist, mygoal=mygoal)
 
 def event():
     form = SQLFORM.factory(

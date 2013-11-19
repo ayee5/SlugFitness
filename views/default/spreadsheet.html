@@ -2,10 +2,37 @@
 {{response.files.append(URL('static','css/custom.css'))}}
 {{extend 'layout.html'}}
 <html>
-<h1>Workout Schedule</h1>
-<body>
+<h1 style = "padding-left:2cm;">Workout Schedule</h1>
 
 	<script type="text/javascript">
+	
+		$( document ).ready(function() {
+			// Handler for .ready() called.
+			var total = 0;
+			for(var c = 0; c < 7; c++){
+				var col_total = 0;
+				for (var r = 0; r < 7; r++){
+					var r_c = r.toString() + c.toString();
+					var curr_val = $("#" + r_c).val();
+					total = total + parseInt(curr_val);
+					col_total = col_total + parseInt(curr_val);
+				}
+				//alert(col_total);
+				var elem = document.getElementById("wt" + c.toString());
+				elem.value = col_total;
+			}
+			var elem = document.getElementById("totalMin");
+			elem.value = total;
+			var min_remain = document.getElementById("goalMin").value - total;
+			
+			if(min_remain >= 0){
+				var elem = document.getElementById("minRemain");
+				elem.value = min_remain;
+			}else{
+				var elem = document.getElementById("minRemain");
+				elem.value = 0;
+			}
+		});
 		
 		function getid(u,el) {   
 			var myid = ($(el).attr('id')); //id of element
@@ -21,19 +48,53 @@
 			});
 			var total = 0;
 			for(var c = 0; c < 7; c++){
+				var col_total = 0;
 				for (var r = 0; r < 7; r++){
 					var r_c = r.toString() + c.toString();
 					var curr_val = $("#" + r_c).val();
 					total = total + parseInt(curr_val);
-				}	
+					col_total = col_total + parseInt(curr_val);
+				}
+				//alert(col_total);
+				var elem = document.getElementById("wt" + c.toString());
+				elem.value = col_total;
 			}
-			alert(total);
-		}		
+			//alert(total);
+			var elem = document.getElementById("totalMin");
+			elem.value = total;
+		}
+
+		function getGoal(u,el) {   
+			var myid = ($(el).attr('id')); //id of element
+			var val = document.getElementById(myid).value; //value of element		
+			var formData = "value=" + val; //json string that will be posted
+		
+			$.ajax({type: "POST", 
+				url: u, 
+				data: formData, 
+				success: function(msg){ 
+				 	var elem = document.getElementById("totalMin");
+					var total = elem.value;
+					var min_remain = document.getElementById("goalMin").value - total;
+			
+					if(min_remain >= 0){
+						var elem = document.getElementById("minRemain");
+						elem.value = min_remain;
+					}else{
+						var elem = document.getElementById("minRemain");
+						elem.value = 0;
+					}
+				}
+			});
+		}
+		
 	</script>
+<div style = "padding-top: 20px;">
+<body>
 
 	<form>
 	<!--<div class="sheet" style="width:800px; margin:0 auto;">-->
-	<div class="sheet">
+	<div class="sheet" style = "width:800px; margin:0 auto;">
 	
 	<table>
 		<tr>
@@ -49,7 +110,7 @@
 		<tr>
 			<td> <input class = "col_row" value='{{=days[r]}}' ></input> </td>
 			{{for c in xrange(7):}}
-				<td> <input class="myinput" value='{{=datalist[r][c]}}' id='{{=r}}{{=c}}' onchange="getid('{{=URL(r=request, f='update')}}',this);"></input> </td>
+				<td> <input class="myinput" value='{{=datalist[r][c]}}' id='{{=r}}{{=c}}' onchange="getid('{{=URL(r=request, f='updateInput')}}',this);"></input> </td>
 			{{pass}}
 		</tr>
 		{{pass}}
@@ -57,7 +118,7 @@
 		<tr>
 			<td> <input class = "weeklySum" value="Weekly Total" ></input> </td>
 			{{for e in xrange(7):}}
-				<td> <input id ='wt{{=r}}' class = "weeklySum" value=''></input> </td>
+				<td> <input id ='wt{{=e}}' class = "weeklySum" value=''></input> </td>
 			{{pass}}	
 		</tr>
 
@@ -65,25 +126,26 @@
 	</div>
 	</form>
 	
-	
+  <div style = "padding-left:2cm;">
 	<form>
 	<div class="sheet">
 	<table>
 		<tr>
 			<td> <input class = "minute_remain" value='Goal'></input> </td>
-			<td> <input class = "myinput" value=''></input> </td>
+			<td> <input id= "goalMin" class = "myinput" value='{{=mygoal}}' onchange="getGoal('{{=URL(r=request, f='updateGoal')}}',this);"></input> </td>
 		</tr>
 		<tr>
 			<td> <input class = "minute_remain" value='Total Minutes'></input> </td>
-			<td> <input class = "myinput" value=''></input> </td>
+			<td> <input id= "totalMin" class = "myinput" value=''></input> </td>
 		</tr>
 		<tr>
 			<td> <input class = "minute_remain" value="Minute until Goal"></input> </td>
-			<td> <input class = "myinput" value=''></input> </td>
+			<td> <input id= "minRemain" class = "myinput" value=''></input> </td>
 		</tr>
 	</table>
 	</div>
 	</form>
-		
+  <div>	
 </body>
+</div>
 <html>

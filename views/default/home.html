@@ -1,5 +1,6 @@
 {{response.files.append(URL('static','css/homepage.css'))}}
-{{extend 'layout.html'}}
+
+
 <html>
   <head>
     <title>Homepage Background https://github.com/mdipierro/web2py-appliances/tree/master/KPax2</title>
@@ -17,11 +18,13 @@
   </head>
   <body>
     <div style="height:50px"></div>
-    <center>
+    <br>
+	<center>
     <a href="{{=URL(r=request,c='default',f='index')}}">
     <img src="{{=URL(r=request,c='static',f='Screen-shot.jpg')}}"/>
     </a><br/>
-    Come join the Slug Movement. Get Fit!
+    Come join the Slug Movement. Get Fit! <br>
+	<p><a class="btn" href="#">==> Learn More <==</a></p>
     </center>
   </body>
 </html>

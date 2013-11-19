@@ -57,6 +57,19 @@ def create_WorkoutSession(user=get_user_email(), r_c = '',row=0, col=0, minutes=
     logger.info("Created a new workout session with key: %r" % key)
     return key
 
+class Goal(ndb.Model):
+    email = ndb.StringProperty()
+    min = ndb.IntegerProperty()	
+
+def create_goal(user=get_user_email(), min = 400):
+    """Creates a message, returning the key."""
+    new_goal = Goal(parent=ndb.Key('User', user))
+    new_goal.email = user
+    new_goal.min = min
+    key = new_goal.put()
+    logger.info("Created a new goal with key: %r" % key)
+    return key
+
 #######################################################
 class Event(ndb.Model):
     title = ndb.StringProperty()
