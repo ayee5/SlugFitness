@@ -11,11 +11,12 @@
          Date is:  {{=x.date}} <br>
          Title is: {{=x.title}} <br>
          Event is: {{=x.event}} <br>
-        {{= A('View', _class='btn', _href=URL('default', 'view', args=x.title)) }} 
+         {{tempid = str(x.key.id())}}
+        {{= A('View', _class='btn', _href=URL('default', 'view', args=tempid)) }} 
         {{ temp = Join.query(Join.email ==get_user_email(), Join.title == x.title).fetch() }}
 
         {{ if x.email == get_user_email():}}
-           {{= A('Edit', _class='btn', _href=URL('default', 'editevent', args=x.title)) }} 
+           {{= A('Edit', _class='btn', _href=URL('default', 'editevent', args=tempid)) }} 
         {{ pass }}                 
         {{ for y in temp:}}
             {{ flag = 0}}
@@ -23,7 +24,7 @@
         {{pass}}     
        
         {{ if flag == 1:}}
-           {{= A('Join', _class='btn', _href=URL('default', 'join', args=x.title)) }} 
+           {{= A('Join', _class='btn', _href=URL('default', 'join', args=tempid)) }} 
         {{ pass}}
 
          {{ flag = 1}}        

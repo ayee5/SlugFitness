@@ -142,7 +142,7 @@ def event():
         Field('event', 'text'),
         Field('date', 'datetime'),       
         )
-    if form.process().accepted:
+    if form.process(onvalidation=check).accepted:
         create_event(title=form.vars.title, event=form.vars.event, date=form.vars.date)    
 
         session.flash = T('Event created')        
@@ -159,8 +159,12 @@ def listevent():
     return dict(event = event, join = join, flag = flag)
 
 def join():
-   title = request.args(0);
-   print title
+   id = request.args(0);
+   title = ""
+   event = Event.query().fetch()
+   for x in event:
+        if str(x.key.id()) == id:
+           title = x.title   
    create_join(title=title)       
    redirect(URL('default', 'login'))
 
@@ -169,25 +173,33 @@ def join():
    
 def view():
    flag  = 0
-   title = request.args(0)
-   event = Event.query(Event.title == title).fetch(1)
-   join = Join.query(Join.title == title).fetch()
+   id = request.args(0)
+   print id
+   found = ""
+   event = Event.query().fetch()
+   for x in event:
+        if str(x.key.id()) == id:
+           found = x.title
+           print found 
    
+   event = Event.query(Event.title == found).fetch(1)    
+   print event
+   join = Join.query(Join.title == found).fetch()
    form = SQLFORM.factory(
         Field('comment', 'text'),       
         )
    if form.process().accepted:
         localtime= time.localtime()
         timeString = time.strftime(" %b %d, %Y at %I:%M %p %I:%M:%S", localtime)
-        create_comment(title = title, comment=form.vars.comment, time = timeString)    
+        create_comment(title = found, comment=form.vars.comment, time = timeString)    
         session.flash = T('Added in new comment')
         flag = 1         
         
    if flag == 1:
         redirect(URL('default', 'listevent'))
    
-   comment = Comment.query(Comment.title == title).order(Comment.title, Comment.time).fetch()    
-   return dict(title=title, event = event, join = join, form = form, comment = comment, flag = flag)
+   comment = Comment.query(Comment.title == found).order(Comment.title, Comment.time).fetch()    
+   return dict(event = event, join = join, form = form, comment = comment, flag = flag)
 
 def editprofile():
     form = SQLFORM.factory(
@@ -215,19 +227,27 @@ def editprofile():
     return dict(form = form)   
 
 def editevent():
-    title = request.args(0)
+    id = request.args(0)
+    title = ""
+
+    allevent = Event.query().fetch()
+    for a in allevent:
+        if str(a.key.id()) == id:
+           title = a.title
+   
     form = SQLFORM.factory(
         Field('title', 'string'),
         Field('event', 'text'),
         Field('date', 'datetime'),            
         )
-    if form.process().accepted:
+    if form.process(onvalidation=check).accepted:
        # hold = create_profile(name=form.vars.name, address=form.vars.address, weight=form.vars.weight, height=form.vars.height)    
         
         event = Event.query(Event.title == title).fetch(1)
         join = Join.query(Event.title == title).fetch()
+        comment = Comment.query(Comment.title == title).fetch()
         for x in event:
-           hold = x.key
+           hold = x.key        
         temp = hold.get()
         temp.title = form.vars.title
         temp.event = form.vars.event
@@ -240,8 +260,11 @@ def editevent():
            change.title = form.vars.title
            change.put()           
                 
-        
-        
+        for z in comment:
+           store = z.key
+           change = store.get()
+           change.title = form.vars.title
+           change.put()
         
         session.flash = T('Edited the event')        
         redirect(URL('default', 'login'))      
@@ -276,6 +299,12 @@ def login():
    
    return dict(s=s, check=check, temp = temp, flag = flag, event = event, join = join)
 
+def check(form):   
+   u = form.vars.title   
+   if u == "":
+      form.errors.email = T("Please enter a title")
+    
+   
 def user():
     """
     exposes:

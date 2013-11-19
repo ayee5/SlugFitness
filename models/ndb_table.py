@@ -91,12 +91,14 @@ def create_event(user=get_user_email(), title = '', event='', date = ''):
     return key     
 
 class Join(ndb.Model):
+    keys = ndb.StringProperty()
     title = ndb.StringProperty()
     email = ndb.StringProperty()
 
-def create_join(user=get_user_email(), title = ''):
+def create_join(user=get_user_email(), title = '', keys = ''):
     """Creates a message, returning the key."""
     new_join = Join(parent=ndb.Key('User', user))
+    new_join.keys = keys 
     new_join.title = title
     new_join.email = user
     key = new_join.put()
@@ -104,18 +106,20 @@ def create_join(user=get_user_email(), title = ''):
     return key         
 
 class Comment(ndb.Model):
+    keys = ndb.StringProperty()
     title = ndb.StringProperty()
     email = ndb.StringProperty()
     comment = ndb.TextProperty()
     time = ndb.StringProperty()
 
-def create_comment(user=get_user_email(), title = '', comment = '', time = ''):
+def create_comment(user=get_user_email(), title = '', comment = '', time = '', keys = ''):
     """Creates a message, returning the key."""
     new_comment = Comment(parent=ndb.Key('User', user))
     new_comment.title = title
     new_comment.email = user
     new_comment.comment = comment
     new_comment.time = time
+    new_comment.keys = keys
     key = new_comment.put()
     logger.info("Joined a new event with key: %r" % key)
     return key      
