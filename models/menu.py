@@ -26,9 +26,9 @@ response.google_analytics_id = None
 
 response.menu = [
     ('Home Page', False, URL('default', 'home'), []),
-    ('Profile', False, URL('default', 'Profile_page'), []),
+    ('Profile', False, URL('default', 'login'), []),
     ('Data', False, URL('default', 'spreadsheet'), []),
-    ('Event', False, URL('default', 'event'),  [])
+    ('Events', False, URL('default', 'listevent'),  [])
 ]
 
 DEVELOPMENT_MENU = True

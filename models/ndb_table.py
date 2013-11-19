@@ -55,7 +55,72 @@ def create_WorkoutSession(user=get_user_email(), r_c = '',row=0, col=0, minutes=
     new_WorkoutSession.minutes = minutes
     key = new_WorkoutSession.put()
     logger.info("Created a new workout session with key: %r" % key)
-    return key 
+    return key
+
+#######################################################
+class Event(ndb.Model):
+    title = ndb.StringProperty()
+    email = ndb.StringProperty()
+    event = ndb.TextProperty()
+    date = ndb.DateTimeProperty()
+    join = ndb.StringProperty()
+
+def create_event(user=get_user_email(), title = '', event='', date = ''):
+    """Creates a message, returning the key."""
+    new_event = Event(parent=ndb.Key('User', user))
+    new_event.title = title
+    new_event.email = user
+    new_event.event = event
+    new_event.date = date
+    new_event.join = ""
+    key = new_event.put()
+    logger.info("Created a new event with key: %r" % key)
+    return key     
+
+class Join(ndb.Model):
+    title = ndb.StringProperty()
+    email = ndb.StringProperty()
+
+def create_join(user=get_user_email(), title = ''):
+    """Creates a message, returning the key."""
+    new_join = Join(parent=ndb.Key('User', user))
+    new_join.title = title
+    new_join.email = user
+    key = new_join.put()
+    logger.info("Joined a new event with key: %r" % key)
+    return key         
+
+class Comment(ndb.Model):
+    title = ndb.StringProperty()
+    email = ndb.StringProperty()
+    comment = ndb.TextProperty()
+    time = ndb.StringProperty()
+
+def create_comment(user=get_user_email(), title = '', comment = '', time = ''):
+    """Creates a message, returning the key."""
+    new_comment = Comment(parent=ndb.Key('User', user))
+    new_comment.title = title
+    new_comment.email = user
+    new_comment.comment = comment
+    new_comment.time = time
+    key = new_comment.put()
+    logger.info("Joined a new event with key: %r" % key)
+    return key      
+
+class Trainer(ndb.Model):
+    email = ndb.StringProperty()
+    information = ndb.TextProperty()
+    name = ndb.StringProperty()
+
+def create_trainer(email = '', name = '', information = ''):
+    """Creates a message, returning the key."""
+    new_trainer = Trainer(parent=ndb.Key('User', user))
+    new_trainer.email = user
+    new_trainer.name = name
+    new_trainer.information = information
+    key = new_trainer.put()
+    logger.info("Joined a new event with key: %r" % key)
+    return key
 	
 
 

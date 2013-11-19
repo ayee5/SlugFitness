@@ -1,13 +1,44 @@
 {{extend 'layout.html'}}
 
-<h1>Welcome your Profile page</h1>
-<br>
+<h1>Welcome to the login page</h1>
 
+{{ if flag == 1: }}
 
-<h1>This is a test query of our NDB data base </h1>
-<br><br>
-{{=myusers}}
+{{for x in check:}}
+   Name: {{=x.name}} <br>
+   Address: {{=x.address}} <br>
+   Height: {{=x.height}} <br>
+   Weight:{{=x.weight}}
+{{pass}}
+{{pass}}
+ <br><br>
+ 
+{{ if str(event) != "[]":}}
+   {{for x in event:}}
+      {{ if x.join == "":}}   
 
-<br><br>
-<p> Here is the event page <a href = "{{=URL('default','event')}}" > this link. </a> </p>
+        {{ temp = Join.query(Join.email ==get_user_email(), Join.title == x.title).fetch(100) }}     
+        {{ for y in temp:}}
+           Posted by: {{=x.email}} <br>
+           Date is:  {{=x.date}} <br>
+           Title is: {{=x.title}} <br>
+           Event is: {{=x.event}} <br>
+        {{pass}}     
+                   
+       {{pass}}
+   <br>
+   <br>
+   {{pass}}
+   
+{{pass}}
+ 
+ 
+ <p> Check out the personal trainers <a href = "{{=URL('default','trainer')}}" > this link. </a> </p>
+<p> Here is the event page <a href = "{{=URL('default','listevent')}}" > this link. </a> </p>
+
+{{ if flag == 0 :}}
 <p> Here add a profile <a href = "{{=URL('default','profile')}}" > this link. </a> </p>
+{{ else: }}
+<p> You can edit your profile <a href = "{{=URL('default','editprofile')}}" > this link. </a> </p>
+
+{{pass}}

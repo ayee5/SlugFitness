@@ -9,7 +9,7 @@
 ## - call exposes all registered services (none by default)
 #########################################################################
 
-
+import time
 
 def home():
     return dict()
@@ -111,11 +111,144 @@ def spreadsheet():
         return dict(datalist=datalist)
 
 def event():
+    form = SQLFORM.factory(
+        Field('title', 'string'),
+        Field('event', 'text'),
+        Field('date', 'datetime'),       
+        )
+    if form.process().accepted:
+        create_event(title=form.vars.title, event=form.vars.event, date=form.vars.date)    
 
-   return dict()       
+        session.flash = T('Event created')        
+        redirect(URL('default', 'login'))     
+    return dict(form=form)          
 
 def learn():
     return dict()
+
+def listevent():
+    flag = 1;
+    event = Event.query().fetch(100)
+    join = Join.query(Join.email == get_user_email()).fetch(100)
+    return dict(event = event, join = join, flag = flag)
+
+def join():
+   title = request.args(0);
+   print title
+   create_join(title=title)       
+   redirect(URL('default', 'login'))
+
+   return dict(event = event, join = join, flag = flag)    
+
+   
+def view():
+   flag  = 0
+   title = request.args(0)
+   event = Event.query(Event.title == title).fetch(1)
+   join = Join.query(Join.title == title).fetch()
+   
+   form = SQLFORM.factory(
+        Field('comment', 'text'),       
+        )
+   if form.process().accepted:
+        localtime= time.localtime()
+        timeString = time.strftime(" %b %d, %Y at %I:%M %p %I:%M:%S", localtime)
+        create_comment(title = title, comment=form.vars.comment, time = timeString)    
+        session.flash = T('Added in new comment')
+        flag = 1         
+        
+   if flag == 1:
+        redirect(URL('default', 'listevent'))
+   
+   comment = Comment.query(Comment.title == title).order(Comment.title, Comment.time).fetch()    
+   return dict(title=title, event = event, join = join, form = form, comment = comment, flag = flag)
+
+def editprofile():
+    form = SQLFORM.factory(
+        Field('name', 'string'),
+        Field('address', 'string'),
+        Field('weight', 'integer'),
+        Field('height', 'integer'),        
+        )
+    if form.process().accepted:
+       # hold = create_profile(name=form.vars.name, address=form.vars.address, weight=form.vars.weight, height=form.vars.height)    
+        
+        person = Profile.query(Profile.email == get_user_email()).fetch(1)
+        for x in person:
+           hold = x.key
+        temp = hold.get()
+        temp.name = form.vars.name
+        temp.address = form.vars.address
+        temp.weight = form.vars.weight
+        temp.height = form.vars.height
+        temp.put()
+                
+        
+        session.flash = T('Edited the profile')        
+        redirect(URL('default', 'login'))      
+    return dict(form = form)   
+
+def editevent():
+    title = request.args(0)
+    form = SQLFORM.factory(
+        Field('title', 'string'),
+        Field('event', 'text'),
+        Field('date', 'datetime'),            
+        )
+    if form.process().accepted:
+       # hold = create_profile(name=form.vars.name, address=form.vars.address, weight=form.vars.weight, height=form.vars.height)    
+        
+        event = Event.query(Event.title == title).fetch(1)
+        join = Join.query(Event.title == title).fetch()
+        for x in event:
+           hold = x.key
+        temp = hold.get()
+        temp.title = form.vars.title
+        temp.event = form.vars.event
+        temp.date = form.vars.date
+        temp.put()
+        
+        for y in join:
+           store = y.key
+           change = store.get()
+           change.title = form.vars.title
+           change.put()           
+                
+        
+        
+        
+        session.flash = T('Edited the event')        
+        redirect(URL('default', 'login'))      
+    return dict(form = form)   
+
+def trainer():
+
+    return dict()
+
+@auth.requires_login() 
+def login():
+   flag = 1
+   s = get_user_email()
+   # key1 = Profile.get_by_id()
+  
+  # print key1
+   fake = ""
+   fake = Profile.query(Profile.email == "non").fetch(1)
+   print fake   
+  
+   if str(fake) == "[]":
+      print "fake is empty"
+  
+   check = Profile.query(Profile.email == get_user_email()).fetch(1)
+   strcheck = str(check)
+   
+   if strcheck == "[]":
+      flag = 0
+   temp = Profile.query().fetch(projection=["name"])
+   event = Event.query().fetch(100)
+   join = Join.query(Join.email == s).fetch(100)
+   
+   return dict(s=s, check=check, temp = temp, flag = flag, event = event, join = join)
 
 def user():
     """

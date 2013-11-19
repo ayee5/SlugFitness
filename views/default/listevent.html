@@ -1,0 +1,40 @@
+{{extend 'layout.html'}}
+
+<h1>Welcome to the Events page</h1>
+
+{{=join}}
+
+{{ if str(event) != "[]":}}
+   {{for x in event:}}
+      {{ if x.join == "":}}   
+         Posted by: {{=x.email}} <br>
+         Date is:  {{=x.date}} <br>
+         Title is: {{=x.title}} <br>
+         Event is: {{=x.event}} <br>
+        {{= A('View', _class='btn', _href=URL('default', 'view', args=x.title)) }} 
+        {{ temp = Join.query(Join.email ==get_user_email(), Join.title == x.title).fetch() }}
+
+        {{ if x.email == get_user_email():}}
+           {{= A('Edit', _class='btn', _href=URL('default', 'editevent', args=x.title)) }} 
+        {{ pass }}                 
+        {{ for y in temp:}}
+            {{ flag = 0}}
+     
+        {{pass}}     
+       
+        {{ if flag == 1:}}
+           {{= A('Join', _class='btn', _href=URL('default', 'join', args=x.title)) }} 
+        {{ pass}}
+
+         {{ flag = 1}}        
+       {{pass}}
+   <br>
+   <br>
+   {{pass}}
+   
+{{pass}}
+
+
+<p> You can add an event <a href = "{{=URL('default','event')}}" > this link. </a> </p>
+<p> You can go back to login page <a href = "{{=URL('default','login')}}" > this link. </a> </p>
+

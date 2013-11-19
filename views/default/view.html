@@ -1,0 +1,39 @@
+{{extend 'layout.html'}}
+
+<h1>Welcome to the view page</h1>
+
+
+{{for x in event:}}
+
+           Posted by: {{=x.email}} <br>
+           Date is:  {{=x.date}} <br>
+           Title is: {{=x.title}} <br>
+           Event is: {{=x.event}} <br>
+                   
+   <br>
+   <br>
+{{pass}}
+
+<p> People joined so far: </p>
+
+{{for y in join:}}
+
+          {{=y.email}}
+   <br>
+{{pass}}
+
+{{for z in comment:}}
+
+          {{=z.email}} {{=z.time}} posted: <br>
+          {{=z.comment}}
+   <br>       
+   <br>
+{{pass}}
+
+
+   <br>
+   <br>
+   <br>
+   <br>
+
+{{=form}}
