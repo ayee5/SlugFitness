@@ -2,7 +2,7 @@
 {{response.files.append(URL('static','css/custom.css'))}}
 {{extend 'layout.html'}}
 <html>
-<h1 style = "padding-left:2cm;">Workout Schedule</h1>
+<h1 style = "padding-left:4cm;">Workout Tracker</h1>
 
 	<script type="text/javascript">
 	
@@ -62,6 +62,17 @@
 			//alert(total);
 			var elem = document.getElementById("totalMin");
 			elem.value = total;
+			
+			var elem = document.getElementById("totalMin");
+			var total = elem.value;
+			var min_remain = document.getElementById("goalMin").value - total;
+			if(min_remain >= 0){
+				var elem = document.getElementById("minRemain");
+				elem.value = min_remain;
+			}else{
+				var elem = document.getElementById("minRemain");
+				elem.value = 0;
+			}
 		}
 
 		function getGoal(u,el) {   
@@ -89,8 +100,46 @@
 		}
 		
 	</script>
-<div style = "padding-top: 20px;">
+<div style = "padding-top: 1px;">
 <body>
+
+<div id = "wrapper">	 
+  <div id = "first">
+	<form>
+	<div class="sheet" style="	float:right; clear:right; padding-top:1cm;">
+	<table>
+		<tr>
+			<td> <input class = "minute_remain" value='User'></input> </td>
+			<td> <input id="this_user" class = "curr_user" value='{{=curruser}}' onchange="getGoal('{{=URL(r=request, f='updateGoal')}}',this);"></input> </td>
+		</tr>
+	</table>
+	</div>
+	</form>
+  </div>
+  
+  <div id = "second" style = "padding-left:3cm;">
+	<form>
+	<div class="sheet">
+	<table>
+		<tr>
+			<td> <input class = "untilgoal" value='Goal'></input> </td>
+			<td> <input id= "goalMin" style = "font-weight:bold;" class = "myinput" value='{{=mygoal}}' onchange="getGoal('{{=URL(r=request, f='updateGoal')}}',this);"></input> </td>
+		</tr>
+		<tr>
+			<td> <input class = "minute_remain" value='Total Minutes'></input> </td>
+			<td> <input id= "totalMin" class = "myinput" value=''></input> </td>
+		</tr>
+		<tr>
+			<td> <input class = "minute_remain" value="Minute until Goal"></input> </td>
+			<td> <input id= "minRemain" class = "myinput" value=''></input> </td>
+		</tr>
+	</table>
+	</div>
+	</form>
+  </div>
+  
+</div>
+	
 
 	<form>
 	<!--<div class="sheet" style="width:800px; margin:0 auto;">-->
@@ -125,27 +174,7 @@
 	</table>
 	</div>
 	</form>
-	
-  <div style = "padding-left:2cm;">
-	<form>
-	<div class="sheet">
-	<table>
-		<tr>
-			<td> <input class = "minute_remain" value='Goal'></input> </td>
-			<td> <input id= "goalMin" class = "myinput" value='{{=mygoal}}' onchange="getGoal('{{=URL(r=request, f='updateGoal')}}',this);"></input> </td>
-		</tr>
-		<tr>
-			<td> <input class = "minute_remain" value='Total Minutes'></input> </td>
-			<td> <input id= "totalMin" class = "myinput" value=''></input> </td>
-		</tr>
-		<tr>
-			<td> <input class = "minute_remain" value="Minute until Goal"></input> </td>
-			<td> <input id= "minRemain" class = "myinput" value=''></input> </td>
-		</tr>
-	</table>
-	</div>
-	</form>
-  <div>	
+  
 </body>
 </div>
 <html>
