@@ -88,8 +88,8 @@ def updateGoal():
 #update specified cell in spreadsheet    
 def updateInput():
     ##values received from post call
-    val = request.vars.values()[1]
-    id = request.vars.values()[0]
+    val = request.vars.value
+    id = request.vars.id
 
     ##query ndb for key of specified cell
     curruser = get_user_email()
@@ -133,14 +133,14 @@ def spreadsheet():
         curr_goal = go.fetch(1)
         for x in curr_goal:  #initialize datalist with the query (has spreadsheet)
             mygoal = x.min 
-        return dict(datalist=datalist, mygoal=mygoal)
+        return dict(datalist=datalist, mygoal=mygoal, curruser=curruser)
     else:
         create_goal(min = 400)
         for rr in xrange(7):  # initialize datalist with all 0 (has no spreadsheet)
             for cc in xrange(7):
                 create_WorkoutSession(r_c=`rr`+`cc`, row=rr, col=cc, minutes=0)
                 datalist[rr].append(0)
-        return dict(datalist=datalist, mygoal=mygoal)
+        return dict(datalist=datalist, mygoal=mygoal, curruser=curruser)
 
 def event():
     form = SQLFORM.factory(
