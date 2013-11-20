@@ -2,8 +2,9 @@
 
 <h1>Welcome to the Events page</h1>
 
-{{=join}}
-
+{{=A ('Add Event', _href=URL('default','event'), _class='btn')}}
+{{=A ('Profile Page', _href=URL('default','login'), _class='btn')}}
+<br>
 {{ if str(event) != "[]":}}
    {{for x in event:}}
       {{ if x.join == "":}}   
@@ -34,8 +35,3 @@
    {{pass}}
    
 {{pass}}
-
-
-<p> You can add an event <a href = "{{=URL('default','event')}}" > this link. </a> </p>
-<p> You can go back to login page <a href = "{{=URL('default','login')}}" > this link. </a> </p>
-

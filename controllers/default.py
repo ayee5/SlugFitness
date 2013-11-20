@@ -25,6 +25,12 @@ def index():
         redirect(URL('default', 'index'))
     return dict(form=form)
 
+@auth.requires_login()	
+def log():
+    session.flash = T('You are logged in')
+    redirect(URL('default', 'home'))
+    return dict()	
+	
 @auth.requires_login()
 def profile():    
     form = SQLFORM.factory(
@@ -148,7 +154,30 @@ def event():
         session.flash = T('Event created')        
         redirect(URL('default', 'login'))     
     return dict(form=form)          
-
+def mycal():
+   flag = 1
+   s = get_user_email()
+   # key1 = Profile.get_by_id()
+  
+  # print key1
+   fake = ""
+   fake = Profile.query(Profile.email == "non").fetch(1)
+   print fake   
+  
+   if str(fake) == "[]":
+      print "fake is empty"
+  
+   check = Profile.query(Profile.email == get_user_email()).fetch(1)
+   strcheck = str(check)
+   
+   if strcheck == "[]":
+      flag = 0
+   temp = Profile.query().fetch(projection=["name"])
+   event = Event.query().fetch(100)
+   join = Join.query(Join.email == s).fetch(100)
+   
+   return dict(s=s, check=check, temp = temp, flag = flag, event = event, join = join)
+	
 def learn():
     return dict()
 

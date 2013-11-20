@@ -1,9 +1,21 @@
 {{extend 'layout.html'}}
 
-<h1>Welcome to the login page</h1>
+<h1>Welcome to the Profile Page</h1>
 
+{{=A ('Personal Trainer', _href=URL('default','trainer'), _class='btn')}}
+{{=A ('Event Page', _href=URL('default','listevent'), _class='btn')}}
+ {{=A ('Workout Calendar', _href=URL('default','mycal'), _class='btn')}}
+{{ if flag == 0 :}}
+ {{=A ('Add Profile', _href=URL('default','profile'), _class='btn')}}
+{{ else: }}
+ {{=A ('Edit Profile', _href=URL('default','editprofile'), _class='btn')}}
+
+{{pass}}
+<br>
+<br>
 {{ if flag == 1: }}
-
+<b>Profile</b>
+<br>
 {{for x in check:}}
    Name: {{=x.name}} <br>
    Address: {{=x.address}} <br>
@@ -12,7 +24,8 @@
 {{pass}}
 {{pass}}
  <br><br>
- 
+ <b>Events:</b>
+ <br>
 {{ if str(event) != "[]":}}
    {{for x in event:}}
       {{ if x.join == "":}}   
@@ -24,21 +37,10 @@
            Title is: {{=x.title}} <br>
            Event is: {{=x.event}} <br>
         {{pass}}     
-                   
+         <br>
+         <br>           
        {{pass}}
-   <br>
-   <br>
+
    {{pass}}
    
-{{pass}}
- 
- 
- <p> Check out the personal trainers <a href = "{{=URL('default','trainer')}}" > this link. </a> </p>
-<p> Here is the event page <a href = "{{=URL('default','listevent')}}" > this link. </a> </p>
-
-{{ if flag == 0 :}}
-<p> Here add a profile <a href = "{{=URL('default','profile')}}" > this link. </a> </p>
-{{ else: }}
-<p> You can edit your profile <a href = "{{=URL('default','editprofile')}}" > this link. </a> </p>
-
 {{pass}}

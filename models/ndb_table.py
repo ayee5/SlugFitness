@@ -138,7 +138,6 @@ def create_trainer(email = '', name = '', information = ''):
     key = new_trainer.put()
     logger.info("Joined a new event with key: %r" % key)
     return key
-	
 
 
 
