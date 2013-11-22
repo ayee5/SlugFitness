@@ -329,9 +329,13 @@ def login():
    return dict(s=s, check=check, temp = temp, flag = flag, event = event, join = join)
 
 def check(form):   
-   u = form.vars.title   
+   u = form.vars.title
+   y = form.vars.date   
    if u == "":
-      form.errors.email = T("Please enter a title")
+      form.errors.title = T("Please enter a title")
+   if y is None:
+      form.errors.date = T("Please enter a date")
+   
     
    
 def user():

@@ -18,15 +18,20 @@
 			events:[
 			  
 			     {{for i,x in enumerate(event):}}{{if i != 0:}},{{pass}}   
-					{{ if x.join == "":}}
 					{
+					{{ if x.join == "":}} 
+					   {{ for j, y in enumerate(join):}}
+					      {{ if x.title == y.title:}}
+						     {{ if y.email == get_user_email():}}
+					{{tempid = str(x.key.id())}}
                      title: '{{=x.event}}',
                      start: new Date('{{=x.date.strftime('%B %d, %Y %H:%M:%S')}}'),	
-					 url: '{{=URL('listevent')}}'
+					 url: '{{=URL('view', args=tempid)}}'
+					          {{pass}} 
+					       {{pass}}
+					    {{pass}}
+					{{pass}}
 					}
-					//{{else:}}
-					
-					//{{pass}}
 			   {{pass}}
 			]
 			
