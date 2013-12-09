@@ -142,6 +142,7 @@ def spreadsheet():
                 datalist[rr].append(0)
         return dict(datalist=datalist, mygoal=mygoal, curruser=curruser)
 
+@auth.requires_login()	        
 def event():
     form = SQLFORM.factory(
         Field('title', 'string'),
@@ -153,7 +154,8 @@ def event():
 
         session.flash = T('Event created')        
         redirect(URL('default', 'login'))     
-    return dict(form=form)          
+    return dict(form=form)        
+    
 def mycal():
    flag = 1
    s = get_user_email()
@@ -180,7 +182,8 @@ def mycal():
 	
 def learn():
     return dict()
-
+    
+@auth.requires_login()	
 def listevent():
     flag = 1;
     event = Event.query().fetch(100)
@@ -300,8 +303,36 @@ def editevent():
     return dict(form = form)   
 
 def trainer():
+    rows = Trainer.query().fetch()              
+    return dict(rows = rows)
+    
+def result():
+   id = request.args(0)
+   empty = ""
+   found = ""
+   trainer = Trainer.query().fetch()
+   if id is None:
+      empty = "There is no result"
+   
+   for x in trainer:
+      if str(x.key.id()) == id:
+         found = x.name
+         print found 
+   
+   trainer = Trainer.query(Trainer.name == found).fetch(1)    
 
-    return dict()
+   return dict(empty = empty, trainer = trainer, id = id)    
+
+def test():
+   temp = ""
+   search = request.vars.search
+   print search
+   
+   trainer = Trainer.query(Trainer.name == search).fetch()
+   for x in trainer:
+      temp = x.key.id()
+         
+   return str(temp)   
 
 @auth.requires_login() 
 def login():
@@ -334,9 +365,32 @@ def check(form):
    if u == "":
       form.errors.title = T("Please enter a title")
    if y is None:
-      form.errors.date = T("Please enter a date")
-   
-    
+      form.errors.date = T("Please enter a date")     
+
+def createtrainer():
+    form = SQLFORM.factory(
+        Field('name', 'string'),
+        Field('information', 'text'),
+        Field('phrase', 'string'),            
+        )
+    if form.process().accepted:
+        create_trainer(name=form.vars.name, information=form.vars.information, phrase=form.vars.phrase)    
+        session.flash = T('Trainer created')        
+        redirect(URL('default', 'trainer'))        
+    return dict(form = form)    
+
+def createclasses():
+    form = SQLFORM.factory(
+        Field('name', 'string'),
+        Field('description', 'text'),
+        Field('instructor', 'string'),  
+        Field('classtime', 'datetime'),                    
+        )
+    if form.process().accepted:
+        create_classes(name=form.vars.name, description=form.vars.description, instructor=form.vars.instructor, classtime = form.vars.classtime)    
+        session.flash = T('classes created')        
+        redirect(URL('default', 'trainer'))        
+    return dict(form = form)       
    
 def user():
     """

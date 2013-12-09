@@ -1,8 +1,73 @@
 {{extend 'layout.html'}}
 
-<h1>This is the professional trainers page</h1>
+<h1>Find your trainers (Enter first name)</h1>
 
 
+{{block head}}
+<style>
+#additem {
+  vertical-align: top;
+}
+</style>
+
+<script>
+$(document).ready(function() {
+  $("#additem").click(function() {
+    var newitem = $("#newitem").val();
+    var hold = newitem;
+    $("#newitem").val("");
+    var encodeditem = $('<div/>').text(newitem).html();
+    var newdiv = $("<div>");
+    //alert(hold)
+    
+    $.ajax({type: "GET",
+      url: '{{=URL(r=request, f='test')}}',
+      data: "search=" + newitem, 
+      				success: function(msg){ 
+                    if(msg == ""){
+                       //alert("blank Message");
+                       var display = document.getElementById('NoResult');                
+                       display.innerHTML = 'No results found';                         
+                    }else{                                    
+                    var url_link = '/SlugFitness/default/result/' + msg;
+                    //alert(url_link)
+                    window.location.href = url_link;
+                    }
+				}
+      });
+    
+    //newdiv.html(encodeditem);
+    //$("#mylist").append(newdiv);
+  });
+
+});
+</script>
+{{end}}
+
+<div id = "NoResult" > </div>
+
+
+<div id="mylist">
+</div>
+
+<input id="newitem" type="text" class="text"/>
+<button id="additem" class="btn">Search</button>
+
+
+<br>
+<br>
+
+<h2> Here is a list of our current trainers </h2>
+<br> <br>
+
+{{for x in rows:}}
+   Name: {{=x.name}} <br>
+   Phrase: {{=x.phrase}} <br> <br>
+{{pass}}
+{{pass}}
+
+<br>
+<br>
 
 <p> Here is your login page <a href = "{{=URL('default','login')}}" > this link. </a> </p>
 

@@ -128,16 +128,35 @@ class Trainer(ndb.Model):
     email = ndb.StringProperty()
     information = ndb.TextProperty()
     name = ndb.StringProperty()
+    phrase = ndb.StringProperty()
 
-def create_trainer(email = '', name = '', information = ''):
+def create_trainer(user=get_user_email(), name = '', information = '', phrase = ''):
     """Creates a message, returning the key."""
     new_trainer = Trainer(parent=ndb.Key('User', user))
     new_trainer.email = user
     new_trainer.name = name
+    new_trainer.phrase = phrase
     new_trainer.information = information
     key = new_trainer.put()
     logger.info("Joined a new event with key: %r" % key)
     return key
+    
+class Classes(ndb.Model):
+    description = ndb.TextProperty()
+    name = ndb.StringProperty()
+    classtime = ndb.DateTimeProperty()
+    instructor = ndb.StringProperty()
+
+def create_classes(user=get_user_email(), name = '', description = '', classtime = '', instructor = ''):
+    """Creates a message, returning the key."""
+    new_classes = Classes(parent=ndb.Key('User', user))
+    new_classes.name = name
+    new_classes.classtime = classtime
+    new_classes.instructor = instructor
+    new_classes.description = description
+    key = new_classes.put()
+    logger.info("Joined a new event with key: %r" % key)
+    return key    
 
 
 

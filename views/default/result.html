@@ -1,0 +1,57 @@
+{{extend 'layout.html'}}
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+<h1>This is the add trainers page</h1>
+
+
+<script> 
+
+$(document).ready(function(){
+  $('#something').click(function(){
+    // alert("Clicked");
+    var hold = document.getElementById('d').innerHTML;
+    //alert(hold);
+     
+     
+     $(function() {
+                   var foo =  $( "#dialog" ).dialog();
+                    foo.html(hold);
+                });
+     
+  });
+});
+
+</script>
+
+
+
+{{temp_name = ""}}
+
+{{for x in trainer:}}
+   Name: {{=x.name}} <br>
+   {{temp_name = x.name}}
+   Email: {{=x.email}} <br>
+   Information: {{=x.information}} <br>
+   Phrase: {{=x.phrase}} <br>
+{{pass}}
+{{pass}}
+
+<br><br>
+
+<h3> Classes </h3>
+<br>
+{{ classes = Classes.query(Classes.instructor == temp_name).fetch() }}
+
+{{ for y in classes: }}
+   Instructor: {{=y.instructor}} <br>
+   Class: <a href= "#" id="something"> {{=y.name}} </a> <br>
+   <div id="dialog" title={{=y.name}}> </div>
+   <p id= "d" hidden> {{=y.description}} <br> Classtime: {{=y.classtime}} </p>
+   Classtime: {{=y.classtime}} <br> <br>  
+
+{{pass}}
+
+
