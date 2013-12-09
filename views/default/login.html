@@ -1,5 +1,8 @@
 {{extend 'layout.html'}}
 
+<html>
+<body>
+<div style ="padding-left: 20px;">
 <h1>Welcome to the Profile Page</h1>
 
 {{=A ('Personal Trainer', _href=URL('default','trainer'), _class='btn')}}
@@ -11,6 +14,7 @@
  {{=A ('Edit Profile', _href=URL('default','editprofile'), _class='btn')}}
 
 {{pass}}
+
 <br>
 <br>
 {{ if flag == 1: }}
@@ -44,3 +48,6 @@
    {{pass}}
    
 {{pass}}
+</div>
+</body>
+</html>

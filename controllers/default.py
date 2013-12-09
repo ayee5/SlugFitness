@@ -67,7 +67,7 @@ def Profile_page():
 
 #update goal on spreadsheet    
 def updateGoal():
-    ##values received from post call
+	##values received from post call
     val = request.vars.values()[0]
 
     ##query ndb for goal of current user

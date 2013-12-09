@@ -6,13 +6,7 @@
     <title>Homepage Background https://github.com/mdipierro/web2py-appliances/tree/master/KPax2</title>
     <center>
 	<br/>
-    {{if auth.is_logged_in():}}
-	   
-	{{else:}}
-	    Welcome, Please Log in:
-	    <br/>
-		<p><a class="btn" href="log">Login</a></p>
-	{{pass}}
+    
 	</center>
     <style type="text/css">
 		body{  
@@ -30,12 +24,12 @@
     <div style="height:50px"></div>
     <br>
 	<center>
-    <a href="{{=URL(r=request,c='default',f='index')}}">
+    <a href="{{=URL(r=request,c='default',f='login')}}">
     <img src="{{=URL(r=request,c='static',f='Screen-shot.jpg')}}"/>
     </a><br/>
     Come join the Slug Movement. Get Fit! 
 	<br>
-	<p><a class="btn" href="#">==> Learn More <==</a></p>
+	<p><a class="btn" href="#">==> Enter Here <==</a></p>
     </center>
   </body>
 </html>
