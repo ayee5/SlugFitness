@@ -2,12 +2,52 @@
 
 <h1>Welcome to the view page</h1>
 
+<script>
+$(document).ready(function() {
+  $("#additem").click(function() {
+    var newitem = $("#newitem").val();
+    var hold = newitem;
+    $("#newitem").val("");
+    var encodeditem = $('<div/>').text(newitem).html();
+    var newdiv = $("<div>");
+    //alert(hold)
+    var hold = document.getElementById('title').innerHTML;
+    //alert(hold);
+    var email = document.getElementById('user').innerHTML;
+    
+    $.ajax({type: "POST",
+      url: '{{=URL(r=request, f='add_comments')}}',
+      data: "title=" + hold + "&comment=" + newitem, 
+      				success: function(msg){ 
+                    var temp = email + " "+ msg;
+                    //alert(temp);
+  	             	var encodeddata = $('<div/>').text(temp).html();
+  		            var newdiv = $("<div>");
+               		newdiv.html(encodeddata);
+  		            // Erases comment field.
+		            $("#comment_form").append(newdiv);
+                    $("#comment_form").append('<br>');
+
+                    }
+      });
+    
+    //newdiv.html(encodeditem);
+    //$("#mylist").append(newdiv);
+  });
+
+});
+</script>
+
+<div id="mylist"></div>
+
+<p id = "user" hidden>{{=person}} posted:</p> 
 
 {{for x in event:}}
 
            Posted by: {{=x.email}} <br>
            Date is:  {{=x.date}} <br>
            Title is: {{=x.title}} <br>
+           <p id = "title" hidden>{{=x.title}}</p>
            Event is: {{=x.event}} <br>
                    
    <br>
@@ -25,19 +65,21 @@
    <br>
    <br>
    <br>
-   
+
+<div id="comment_form">   
 {{for z in comment:}}
 
-          {{=z.email}} {{=z.time}} posted: <br>
-          {{=z.comment}}
+          {{=z.email}} posted: {{=z.comment}}
    <br>       
    <br>
 {{pass}}
+</div>
+
+   <br>
+   <br>
+   <br>
+   <br>
 
 
-   <br>
-   <br>
-   <br>
-   <br>
-
-{{=form}}
+<input id="newitem" type="text" class="text"/>
+<button id="additem" class="btn">Add Comments</button>

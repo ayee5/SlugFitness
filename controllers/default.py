@@ -68,7 +68,7 @@ def Profile_page():
 #update goal on spreadsheet    
 def updateGoal():
     ##values received from post call
-    val = request.vars.values()[0]
+    val = request.vars.value
 
     ##query ndb for goal of current user
     curruser = get_user_email()
@@ -205,6 +205,7 @@ def join():
    
 def view():
    flag  = 0
+   person = get_user_email()
    id = request.args(0)
    print id
    found = ""
@@ -227,11 +228,12 @@ def view():
         session.flash = T('Added in new comment')
         flag = 1         
         
-   if flag == 1:
-        redirect(URL('default', 'listevent'))
+  # if flag == 1:
+   #     redirect(URL('default', 'listevent'))
    
-   comment = Comment.query(Comment.title == found).order(Comment.title, Comment.time).fetch()    
-   return dict(event = event, join = join, form = form, comment = comment, flag = flag)
+   comment = Comment.query(Comment.title == found).order(Comment.title, Comment.time).fetch()
+  # post_url = URL('view', user_signature=True, args = id)   
+   return dict(event = event, join = join, comment = comment, flag = flag, person = person)
 
 def editprofile():
     form = SQLFORM.factory(
@@ -359,6 +361,20 @@ def login():
    
    return dict(s=s, check=check, temp = temp, flag = flag, event = event, join = join)
 
+def add_comments():
+   temp = ""
+   comment = request.vars.comment
+   title = request.vars.title
+   print comment
+   print title
+   
+   localtime= time.localtime()
+   timeString = time.strftime(" %b %d, %Y at %I:%M %p %I:%M:%S", localtime)
+   create_comment(title = title, comment=comment, time = timeString)  
+         
+   return str(comment)  
+   
+   
 def check(form):   
    u = form.vars.title
    y = form.vars.date   
