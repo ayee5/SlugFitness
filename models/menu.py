@@ -27,7 +27,8 @@ response.menu = [
     ('Home Page', False, URL('default', 'home'), []),
     ('Profile', False, URL('default', 'login'), []),
     ('Data', False, URL('default', 'spreadsheet'), []),
-    ('Events', False, URL('default', 'listevent'),  [])
+    ('Events', False, URL('default', 'listevent'),  []),
+	('Trainer', False, URL('default', 'trainer'),  [])
 ]
 
 DEVELOPMENT_MENU = False

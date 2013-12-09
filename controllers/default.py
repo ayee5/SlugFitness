@@ -213,7 +213,7 @@ def view():
    for x in event:
         if str(x.key.id()) == id:
            found = x.title
-           print found 
+         #  print found 
    
    event = Event.query(Event.title == found).fetch(1)    
    print event
@@ -227,13 +227,9 @@ def view():
         create_comment(title = found, comment=form.vars.comment, time = timeString)    
         session.flash = T('Added in new comment')
         flag = 1         
-        
-  # if flag == 1:
-   #     redirect(URL('default', 'listevent'))
-   
+
    comment = Comment.query(Comment.title == found).order(Comment.title, Comment.time).fetch()
-  # post_url = URL('view', user_signature=True, args = id)   
-   return dict(event = event, join = join, comment = comment, flag = flag, person = person)
+   return dict(found = found, event = event, join = join, comment = comment, flag = flag, person = person)
 
 def editprofile():
     form = SQLFORM.factory(

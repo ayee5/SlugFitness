@@ -38,8 +38,9 @@
 
         {{ temp = Join.query(Join.email ==get_user_email(), Join.title == x.title).fetch(100) }}     
 		{{ for y in temp:}}
+		{{tempid = str(x.key.id())}}
 		<div style ="background-color: #FFFFCC ; padding-right:10px; padding-top:10px; padding-left:10px; padding-bottom:10px; margin-right:20px">
-           <p style = "font-size:175%;">{{=x.title}}<p>
+           <p style = "font-size:175%;"><a href = "{{=URL('default','view', args=tempid)}}" > {{=x.title}}</a><p>
 		   Posted by: {{=x.email}} <br>
            Date is:  {{=x.date}} <br>
            Description is: {{=x.event}}

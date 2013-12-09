@@ -1,6 +1,9 @@
 {{extend 'layout.html'}}
 
-<h1>Welcome to the view page</h1>
+<html>
+<body>
+<div style ="padding-left: 20px;">
+<h1>Event: {{=found}}</h1>
 
 <script>
 $(document).ready(function() {
@@ -53,15 +56,16 @@ $(document).ready(function() {
    <br>
    <br>
 {{pass}}
-
+<div style ="background-color: silver; margin-right:20px;">
 <p> People joined so far: </p>
 
-{{for y in join:}}
+	{{for y in join:}}
 
-          {{=y.email}}
+			{{=y.email}}
 
-{{pass}}
-
+	{{pass}}
+	alvin 
+</div>
    <br>
    <br>
    <br>
@@ -83,3 +87,7 @@ $(document).ready(function() {
 
 <input id="newitem" type="text" class="text"/>
 <button id="additem" class="btn">Add Comments</button>
+
+</div>
+</body>
+</html>
