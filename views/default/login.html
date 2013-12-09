@@ -1,6 +1,9 @@
 {{extend 'layout.html'}}
 
-<h1>Welcome to the Profile Page</h1>
+<html>
+<body>
+<div style ="padding-left: 20px;">
+<h1>My Profile</h1>
 
 {{=A ('Personal Trainer', _href=URL('default','trainer'), _class='btn')}}
 {{=A ('Event Page', _href=URL('default','listevent'), _class='btn')}}
@@ -11,36 +14,43 @@
  {{=A ('Edit Profile', _href=URL('default','editprofile'), _class='btn')}}
 
 {{pass}}
+
 <br>
 <br>
 {{ if flag == 1: }}
-<b>Profile</b>
 <br>
 {{for x in check:}}
    Name: {{=x.name}} <br>
+   Email: {{=s}} <br>
    Address: {{=x.address}} <br>
    Height: {{=x.height}} <br>
    Weight:{{=x.weight}}
 {{pass}}
 {{pass}}
  <br><br>
- <b>Events:</b>
+ <div style ="padding-bottom:5px;">
+ <b  style ="font-size:175%; padding-bottom:10px;">Events I Joined:</b>
+ </div>
  <br>
 {{ if str(event) != "[]":}}
    {{for x in event:}}
       {{ if x.join == "":}}   
 
         {{ temp = Join.query(Join.email ==get_user_email(), Join.title == x.title).fetch(100) }}     
-        {{ for y in temp:}}
-           Posted by: {{=x.email}} <br>
+		{{ for y in temp:}}
+		<div style ="background-color: #FFFFCC ; padding-right:10px; padding-top:10px; padding-left:10px; padding-bottom:10px; margin-right:20px">
+           <p style = "font-size:175%;">{{=x.title}}<p>
+		   Posted by: {{=x.email}} <br>
            Date is:  {{=x.date}} <br>
-           Title is: {{=x.title}} <br>
-           Event is: {{=x.event}} <br>
+           Description is: {{=x.event}}
+		</div>   
         {{pass}}     
-         <br>
-         <br>           
+         <br>        
        {{pass}}
 
    {{pass}}
    
 {{pass}}
+</div>
+</body>
+</html>
