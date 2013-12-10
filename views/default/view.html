@@ -22,10 +22,10 @@ $(document).ready(function() {
       url: '{{=URL(r=request, f='add_comments')}}',
       data: "title=" + hold + "&comment=" + newitem, 
       				success: function(msg){ 
-                    var temp = email + " "+ msg;
-                    //alert(temp);
+                    var temp = email + "\n"+ msg;
+                    alert(temp);
   	             	var encodeddata = $('<div/>').text(temp).html();
-  		            var newdiv = $("<div>");
+					var newdiv = $("<div>");
                		newdiv.html(encodeddata);
   		            // Erases comment field.
 		            $("#comment_form").append(newdiv);
@@ -64,7 +64,6 @@ $(document).ready(function() {
 			{{=y.email}}
 
 	{{pass}}
-	alvin 
 </div>
    <br>
    <br>
@@ -72,8 +71,11 @@ $(document).ready(function() {
 
 <div id="comment_form">   
 {{for z in comment:}}
-
-          {{=z.email}} posted: {{=z.comment}}
+			{{if z.email == person:}}
+				{{=z.email}} posted: {{=z.comment}} 
+			{{else:}}
+				<b style = "color:blue;">{{=z.email}}</b> posted: {{=z.comment}} 
+			{{pass}}	
    <br>       
    <br>
 {{pass}}
