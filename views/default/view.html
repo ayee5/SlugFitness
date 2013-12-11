@@ -23,7 +23,7 @@ $(document).ready(function() {
       data: "title=" + hold + "&comment=" + newitem, 
       				success: function(msg){ 
                     var temp = email + "\n"+ msg;
-                    alert(temp);
+                    //alert(temp);
   	             	var encodeddata = $('<div/>').text(temp).html();
 					var newdiv = $("<div>");
                		newdiv.html(encodeddata);
