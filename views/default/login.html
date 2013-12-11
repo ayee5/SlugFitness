@@ -45,19 +45,19 @@
                 {{dot = "..."}}
                 {{x1 = x.event}}
                 {{x2 = len(x1)}}
-                {{if x2 >= 65:}}
-                   {{x3 = 65 - x2}}
+                {{if x2 >= 50:}}
+                   {{x3 = 50 - x2}}
                    {{x1 = x1[:x3]}} 
                    {{x1 = x1 + dot}}               
               {{pass}}
                 {{y1 = x.title}}
                 {{y2 = len(y1)}}
-                {{if y2 >= 30:}}
-                   {{y3 = 30 - y2}}
+                {{if y2 >= 25:}}
+                   {{y3 = 25 - y2}}
                    {{y1 = y1[:y3]}} 
                    {{y1 = y1 + dot}}               
               {{pass}}
-            <div style="height: 120px;width: 35%;float:left;background:#FFFFCC;border: thick solid  ##FFFFCC;border-radius:20px; padding-left:20px; padding-right:20px; margin: 20px;">
+            <div style="height: 150px;width: 35%;float:left;background:#FFFFCC;border: thick solid  ##FFFFCC;border-radius:20px; padding-left:20px; padding-right:20px; margin: 20px;">
            <br>  
            <p style = "font-size:175%;"><a href = "{{=URL('default','view', args=tempid)}}" > {{=y1}}</a><p>
            Posted by: {{=x.email}} <br>
