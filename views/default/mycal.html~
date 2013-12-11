@@ -11,7 +11,7 @@ Activity Joined
 <div style="height: 20px;width: 35%;float:left;background:#3a87ad">
 Activity Not Joined
 </div>
-<br><br>
+
 {{pass}}
 <script type='text/javascript'>
 	jQuery(document).ready(function() {

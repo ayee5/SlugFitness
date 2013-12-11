@@ -5,6 +5,15 @@
  */
 
 
+/*Custom Color*/
+.custom,
+.custom div,
+.custom span {
+ 	border: 1px solid #CC0033; /* default BORDER color */
+	background-color: #CC0033; /* default BACKGROUND color */
+	color: #fff;   
+	cursor: default;
+}	
 .fc {
 	direction: ltr;
 	text-align: left;
@@ -259,11 +268,10 @@ html .fc,
 .fc-event-container > .ui-draggable-dragging,
 .fc-event-container > .ui-resizable-resizing {
 	z-index: 9;
-	}
-	 
+	} 
 .fc-event { /*default color of event  */
 	border: 1px solid #3a87ad; /* default BORDER color */
-	background-color: #CC0033; /* default BACKGROUND color */
+	background-color: #3a87ad; /* default BACKGROUND color */
 	color: #fff;               /* default TEXT color */
 	font-size: .85em;
 	cursor: default;
