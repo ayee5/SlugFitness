@@ -19,20 +19,13 @@
                    {{x1 = x1[:x3]}} 
                    {{x1 = x1 + dot}}               
               {{pass}}
-                {{y1 = x.title}}
-                {{y2 = len(y1)}}
-                {{if y2 >= 30:}}
-                   {{y3 = 30 - y2}}
-                   {{y1 = y1[:y3]}} 
-                   {{y1 = y1 + dot}}               
-              {{pass}}
             <div style="height: 150px;width: 35%;float:left;background:#66CCCC;border: thick solid  ##66CCCC;border-radius:20px; padding-left:20px; padding-right:20px; margin: 20px;">
            <br>  
 
  
          Posted by: {{=x.email}} <br>
          Date is:  {{=x.date}} <br>
-         Title is: {{=y1}} <br>
+         Title is: {{=x.title}} <br>
          Event is: {{=x1}} <br>
          {{tempid = str(x.key.id())}}
         {{= A('View', _class='btn', _href=URL('default', 'view', args=tempid)) }} 

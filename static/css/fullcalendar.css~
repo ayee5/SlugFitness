@@ -261,7 +261,7 @@ html .fc,
 	z-index: 9;
 	}
 	 
-.fc-event { /*default color of event  */
+.fc-event {
 	border: 1px solid #3a87ad; /* default BORDER color */
 	background-color: #CC0033; /* default BACKGROUND color */
 	color: #fff;               /* default TEXT color */
